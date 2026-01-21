@@ -1,6 +1,6 @@
 # Build
 # Deploy using Caddy to host static files
-FROM caddy:2.8.4-alpine
+FROM caddy:2.10.2-alpine
 
 # Install envsubst
 RUN apk add --no-cache gettext
