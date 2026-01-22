@@ -18,30 +18,23 @@ jobs:
         package: [ frontend ]
     timeout-minutes: 10
     steps:
-      - uses: bcgov-nr/action-builder-ghcr@v2.3.0
+      - uses: bcgov-nr/action-builder-ghcr@v4.2.1
         with:
-          keep_versions: 50
           package: ${{ matrix.package }}
-          tag: ${{ github.event.number }}
+          tags: ${{ github.event.number }}
           tag_fallback: latest
           triggers: ('${{ matrix.package }}/')
 
   # https://github.com/bcgov/quickstart-openshift-helpers
-  deploys-silver-dev:
+  deploys-clab-dev:
     name: Deploys (${{ github.event.number }})
     needs: [builds]
-    uses: ./.github/workflows/silver-dev.yml
-    secrets: inherit
-
-  deploys-gold-dev:
-    name: Deploys (${{ github.event.number }})
-    needs: [builds]
-    uses: ./.github/workflows/gold-dev.yml
+    uses: ./.github/workflows/clab-dev.yml
     secrets: inherit
 
   results:
     name: PR Results
-    needs: [builds, deploys-silver-dev, deploys-gold-dev]
+    needs: [builds, deploys-clab-dev]
     if: always()
     runs-on: ubuntu-24.04
     steps:

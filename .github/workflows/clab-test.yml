@@ -1,5 +1,5 @@
 ---
-name: Deploy Uat (Silver)
+name: Deploy Test (CLAB)
 
 on:
   workflow_dispatch:
@@ -27,14 +27,13 @@ on:
         required: false
         type: string
 jobs:
-  deploys-silver-uat:
-    name: Deploys (${{ github.event.number }})
+  deploy-clab-test:
+    name: Deploy (test, tag=${{ inputs.tag }})
     uses: ./.github/workflows/.deployer.yml
     secrets: inherit
     with:
-      environment: silver-uat
+      environment: clab-test
       tag: ${{ inputs.tag }}
-      params:
-        --set global.domain="apps.silver.devops.gov.bc.ca"
-        --set frontend.ingress.tls=false
+      params: 
+        --set global.domain="apps.clab.devops.gov.bc.ca"
         ${{ inputs.params }}
